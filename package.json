@@ -8,7 +8,9 @@
   },
   "devDependencies": {
     "csslint-stylish": "0.0.5",
+    "gulp-autoprefixer": "^3.1.1",
     "gulp-csslint": "^1.0.0",
+    "gulp-jslint": "^1.0.10",
     "gulp-less": "^3.3.0",
     "gulp-lesshint": "^3.0.0",
     "gulp-rename": "^1.2.2"
@@ -18,7 +20,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "not_created"
+    "url": "https://github.com/Rodrigo96/Front-End-Workflow.git"
   },
   "author": "Rodrigo Alves",
   "license": "ISC"

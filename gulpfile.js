@@ -4,15 +4,18 @@
 var gulp = require('gulp'),
     less = require('gulp-less'),
     rename = require("gulp-rename"),
-    cssLint = require('gulp-csslint'),
-    lesshint = require('gulp-lesshint');
+    jslint = require('gulp-jslint'),
+    csslint = require('gulp-csslint'),
+    lesshint = require('gulp-lesshint'),
+    autoprefixer = requisre('gulp-autoprefixer');
 
 // Paths
 var _src = 'src',
     _dist = 'dist',
     _html = _src + '/*.html',
     _less = _src + '/css/less',
-    _css = _src + '/css';
+    _css = _src + '/css',
+    _js = _src + '/js';
 
 // lint less
 gulp.task('lint-less', function() {
@@ -35,9 +38,26 @@ gulp.task('compile-less', function() {
 // lint css
 gulp.task('lint-css', function() {
   return gulp.src(_css + '/main.css')
-    .pipe(cssLint())
-    .pipe(cssLint.formatter(
+    .pipe(csslint())
+    .pipe(csslint.formatter(
       require('csslint-stylish')))
+});
+
+// autoprefix css
+gulp.task('prefix-css', function() {
+  return gulp.src(_css + '/main.css')
+    .pipe(autoprefixer(
+      { browsers: ['last 2 versions'] }
+    ))
+    .pipe(gulp.dest(_css))
+});
+
+// lint js
+gulp.task('lint-js', function() {
+  return gulp.src(_js + '/main.js')
+    .pipe(jslint())
+    .pipe(
+      jslint.reporter('stylish'))
 });
 
 gulp.task('default', function() {

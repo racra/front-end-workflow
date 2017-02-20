@@ -1,3 +1,19 @@
 div {
     font-size: 20px;
 }
+
+
+@-webkit-keyframes MyAnimation {
+    0% { left: 0; }	
+   50% { left: 200px; }	
+  100% { left: 20px; }	
+}
+@keyframes MyAnimation {
+    0% { left: 0; }	
+   50% { left: 200px; }	
+  100% { left: 20px; }	
+}
+
+.example.is-animating {
+    animation: MyAnimation 2s; /* IE >9, Fx >15, Op >12.0 */
+}
