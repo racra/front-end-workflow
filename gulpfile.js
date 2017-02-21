@@ -2,17 +2,17 @@
 
 // Modules
 const gulp = require('gulp'),
-    less = require('gulp-less'),
-    rename = require("gulp-rename"),
-    jslint = require('gulp-jslint'),
-    uglify = require('gulp-uglify'),
-    cmq = require('gulp-combine-mq'),
-    csslint = require('gulp-csslint'),
-    imagemin = require('gulp-imagemin'),
-    lesshint = require('gulp-lesshint'),
-    cleancss = require('gulp-clean-css'),
-    autoprefixer = require('gulp-autoprefixer'),
-    browserSync = require('browser-sync').create();
+      less = require('gulp-less'),
+      rename = require("gulp-rename"),
+      jslint = require('gulp-jslint'),
+      uglify = require('gulp-uglify'),
+      cmq = require('gulp-combine-mq'),
+      csslint = require('gulp-csslint'),
+      imagemin = require('gulp-imagemin'),
+      lesshint = require('gulp-lesshint'),
+      cleancss = require('gulp-clean-css'),
+      autoprefixer = require('gulp-autoprefixer'),
+      browserSync = require('browser-sync').create();
 
 const cfg = {
   root: 'src',
@@ -21,11 +21,13 @@ const cfg = {
     css: '/css',
     less: '/less',
     js: '/js',
+    libs: '/libs',
     imgs: '/imgs'
   },
   dist: {
     css: '/css',
     js: '/js',
+    libs: '/libs',
     imgs: '/imgs'
   }
 };
@@ -105,9 +107,14 @@ gulp.task('serve', () => {
       });
 });
 
-gulp.task('copy-to-dist', () => {
+gulp.task('copy-html', () => {
   return gulp.src(cfg.root + '/*.html')
     .pipe(gulp.dest(cfg.build + '/'));
+})
+
+gulp.task('copy-libs', () => {
+  return gulp.src(cfg.root + '/' + cfg.src.js + cfg.src.libs + '/*.js')
+    .pipe(gulp.dest(cfg.build + '/' + cfg.dist.js + cfg.dist.libs));
 })
 
 gulp.task('minify-js', () => {
@@ -139,4 +146,4 @@ gulp.task('css', ['lint-less', 'compile-less', 'cmq', 'prefix-css']);
 
 gulp.task('js', ['lint-js']);
 
-gulp.task('dist', ['copy-to-dist', 'minify-js', 'minify-css', 'minify-imgs']);
+gulp.task('dist', ['copy-html', 'copy-libs', 'minify-js', 'minify-css', 'minify-imgs']);
