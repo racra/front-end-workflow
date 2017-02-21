@@ -1,22 +1,27 @@
 div {
   font-size: 20px;
 }
-@keyframes MyAnimation {
-  0% {
-    left: 0px;
-  }
-  50% {
-    left: 200px;
-  }
-  100% {
-    left: 20px;
-  }
+
+p {
+  color: yellow;
 }
+
 .example.is-animating {
   animation: MyAnimation 2s;
 }
+
 .page-wrap {
   display: -ms-flexbox;
   display: flex;
-  /* NEW, Spec - Firefox, Chrome, Opera */
+ /* NEW, Spec - Firefox, Chrome, Opera */;
+}
+
+@media only screen and (max-width: 500px) {
+  body {
+    background-color: lightblue;
+  }
+
+  p {
+    font-size: 30px;
+  }
 }
