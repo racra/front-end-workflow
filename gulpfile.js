@@ -1,6 +1,6 @@
 'use strict';
 
-// Modules
+// modules
 const gulp = require('gulp'),
       less = require('gulp-less'),
       rename = require("gulp-rename"),
@@ -14,6 +14,7 @@ const gulp = require('gulp'),
       autoprefixer = require('gulp-autoprefixer'),
       browserSync = require('browser-sync').create();
 
+// paths
 const cfg = {
   root: 'src',
   build: 'dist',
@@ -32,7 +33,6 @@ const cfg = {
   }
 };
 
-// lint less
 gulp.task('lint-less', () => {
   return gulp.src(cfg.root + cfg.src.css + cfg.src.less + '/*.less')
     .pipe(lesshint())
@@ -40,7 +40,6 @@ gulp.task('lint-less', () => {
     .pipe(lesshint.failOnError());
 });
 
-// compile less files
 gulp.task('compile-less', ['lint-less'],() => {
   return gulp.src(cfg.root + cfg.src.css + cfg.src.less + '/imports.less')
     .pipe(less())
@@ -48,15 +47,6 @@ gulp.task('compile-less', ['lint-less'],() => {
     .pipe(gulp.dest(cfg.root + cfg.src.css));
 });
 
-// lint css
-gulp.task('lint-css', () => {
-  return gulp.src(cfg.root + cfg.src.css + '/main.css')
-    .pipe(csslint())
-    .pipe(csslint.formatter(
-      require('csslint-stylish')));
-});
-
-// autoprefix css
 gulp.task('prefix-css', ['cmq'], () => {
   return gulp.src(cfg.root + cfg.src.css + '/main.css')
     .pipe(autoprefixer(
@@ -73,7 +63,6 @@ gulp.task('cmq', ['compile-less'], () => {
     .pipe(gulp.dest(cfg.root + cfg.src.css));
 })
 
-// lint js
 gulp.task('lint-js', () => {
   return gulp.src(cfg.root + cfg.src.js + '/main.js')
     .pipe(jslint({
@@ -84,8 +73,7 @@ gulp.task('lint-js', () => {
       jslint.reporter('stylish'));
 });
 
-// watch files
-gulp.task('watch', ['serve'], () => {
+gulp.task('watch', ['create-server'], () => {
   gulp.watch([
     cfg.root + cfg.src.css + cfg.src.less + '/*.less',
     cfg.root + cfg.src.js + '/main.js',
@@ -93,18 +81,16 @@ gulp.task('watch', ['serve'], () => {
     ], ['css', 'js', 'reload']);
 })
 
-// reload browser
-gulp.task('reload', ['css', 'js'], () => {
-  browserSync.reload();
-});
-
-// create server
-gulp.task('serve', () => {
+gulp.task('create-server', () => {
   browserSync.init({
         server: {
           baseDir: cfg.root + '/',
         }
       });
+});
+
+gulp.task('reload', ['css', 'js'], () => {
+  browserSync.reload();
 });
 
 gulp.task('copy-html', () => {
@@ -138,12 +124,9 @@ gulp.task('minify-imgs', () => {
     .pipe(gulp.dest(cfg.build + '/' + cfg.dist.imgs));
 })
 
+// tasks
 gulp.task('default', ['css', 'js']);
-
-gulp.task('server', ['serve', 'watch'])
-
-gulp.task('css', ['lint-less', 'compile-less', 'cmq', 'prefix-css']);
-
 gulp.task('js', ['lint-js']);
-
+gulp.task('css', ['lint-less', 'compile-less', 'cmq', 'prefix-css']);
+gulp.task('server', ['create-server', 'watch'])
 gulp.task('dist', ['copy-html', 'copy-libs', 'minify-js', 'minify-css', 'minify-imgs']);
