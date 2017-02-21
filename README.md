@@ -24,8 +24,7 @@ src
      | - main.js
      | - libs
           |
-          | - jquery.min.css
-      
+          | - jquery.min.css 
  |
  | - imgs
      |
@@ -43,8 +42,7 @@ dist
      | - main.js (minified js)
      | - libs
           |
-          | - jquery.min.css
-      
+          | - jquery.min.css 
  |
  | - imgs
      |
@@ -65,6 +63,7 @@ $ npm install
 $ gulp server
 ```
 Start a server at http://localhost:3000/ that watches for file changes and reloads the page accordingly.
+
 Start BrowserSync server at http://localhost:3001/
 
 ```
