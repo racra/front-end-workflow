@@ -5,15 +5,18 @@ const gulp = require('gulp'),
     less = require('gulp-less'),
     rename = require("gulp-rename"),
     jslint = require('gulp-jslint'),
-    csslint = require('gulp-csslint'),
-    lesshint = require('gulp-lesshint'),
-    autoprefixer = require('gulp-autoprefixer'),
+    uglify = require('gulp-uglify'),
     cmq = require('gulp-combine-mq'),
+    csslint = require('gulp-csslint'),
+    imagemin = require('gulp-imagemin'),
+    lesshint = require('gulp-lesshint'),
+    cleancss = require('gulp-clean-css'),
+    autoprefixer = require('gulp-autoprefixer'),
     browserSync = require('browser-sync').create();
 
 const cfg = {
   root: 'src',
-  dist: 'dist',
+  build: 'dist',
   src: {
     css: '/css',
     less: '/less',
@@ -88,10 +91,12 @@ gulp.task('watch', ['serve'], () => {
     ], ['css', 'js', 'reload']);
 })
 
+// reload browser
 gulp.task('reload', ['css', 'js'], () => {
   browserSync.reload();
 });
 
+// create server
 gulp.task('serve', () => {
   browserSync.init({
         server: {
@@ -99,6 +104,32 @@ gulp.task('serve', () => {
         }
       });
 });
+
+gulp.task('copy-to-dist', () => {
+  return gulp.src(cfg.root + '/*.html')
+    .pipe(gulp.dest(cfg.build + '/'));
+})
+
+gulp.task('minify-js', () => {
+  return gulp.src(cfg.root + cfg.src.js + '/main.js')
+    .pipe(uglify())
+    .pipe(gulp.dest(cfg.build + '/' + cfg.dist.js));
+});
+
+gulp.task('minify-css', () => {
+  return gulp.src(cfg.root + cfg.src.css + '/main.css')
+    .pipe(cleancss({debug: true}, details => {
+            console.log('Normal ' + details.name + ': ' + details.stats.originalSize + ' bytes');
+            console.log('Minified ' + details.name + ': ' + details.stats.minifiedSize + ' bytes');
+        }))
+    .pipe(gulp.dest(cfg.build + '/' + cfg.dist.css));
+});
+
+gulp.task('minify-imgs', () => {
+  return gulp.src(cfg.root + cfg.src.imgs + '/*.*')
+    .pipe(imagemin())
+    .pipe(gulp.dest(cfg.build + '/' + cfg.dist.imgs));
+})
 
 gulp.task('default', ['css', 'js']);
 
@@ -108,9 +139,4 @@ gulp.task('css', ['lint-less', 'compile-less', 'cmq', 'prefix-css']);
 
 gulp.task('js', ['lint-js']);
 
-// minify js and css
-
-// minify images
-
-// copy html, css, js to dist - minify css and js
-// minify imgs and past in dist
+gulp.task('dist', ['copy-to-dist', 'minify-js', 'minify-css', 'minify-imgs']);
