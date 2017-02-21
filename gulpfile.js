@@ -7,19 +7,27 @@ var gulp = require('gulp'),
     jslint = require('gulp-jslint'),
     csslint = require('gulp-csslint'),
     lesshint = require('gulp-lesshint'),
-    autoprefixer = requisre('gulp-autoprefixer');
+    autoprefixer = require('gulp-autoprefixer');
 
-// Paths
-var _src = 'src',
-    _dist = 'dist',
-    _html = _src + '/*.html',
-    _less = _src + '/css/less',
-    _css = _src + '/css',
-    _js = _src + '/js';
+var cfg = {
+  root: 'src',
+  dist: 'dist',
+  src: {
+    css: '/css',
+    less: '/less',
+    js: '/js',
+    imgs: '/imgs'
+  },
+  dist: {
+    css: '/css',
+    js: '/js',
+    imgs: '/imgs'
+  }
+};
 
 // lint less
 gulp.task('lint-less', function() {
-  return gulp.src(_less + '/*.less')
+  return gulp.src(cfg.root + cfg.src.css + cfg.src.less + '/*.less')
     .pipe(lesshint())
     .pipe(lesshint.reporter())
     .pipe(lesshint.failOnError())
@@ -27,17 +35,17 @@ gulp.task('lint-less', function() {
 
 // compile less files
 gulp.task('compile-less', function() {
-  return gulp.src(_less + '/imports.less')
+  return gulp.src(cfg.root + cfg.src.css + cfg.src.less + '/imports.less')
     .pipe(less())
     .pipe(rename("main.css"))
     .pipe(
-      gulp.dest(_css)
+      gulp.dest(cfg.root + cfg.src.css)
     );
 });
 
 // lint css
 gulp.task('lint-css', function() {
-  return gulp.src(_css + '/main.css')
+  return gulp.src(cfg.root + cfg.src.css + '/main.css')
     .pipe(csslint())
     .pipe(csslint.formatter(
       require('csslint-stylish')))
@@ -45,16 +53,16 @@ gulp.task('lint-css', function() {
 
 // autoprefix css
 gulp.task('prefix-css', function() {
-  return gulp.src(_css + '/main.css')
+  return gulp.src(cfg.root + cfg.src.css + '/main.css')
     .pipe(autoprefixer(
       { browsers: ['last 2 versions'] }
     ))
-    .pipe(gulp.dest(_css))
+    .pipe(gulp.dest(cfg.root + cfg.src.css))
 });
 
 // lint js
 gulp.task('lint-js', function() {
-  return gulp.src(_js + '/main.js')
+  return gulp.src(cfg.root + cfg.src.js + '/main.js')
     .pipe(jslint())
     .pipe(
       jslint.reporter('stylish'))
@@ -64,11 +72,9 @@ gulp.task('default', function() {
   // place code for your default task here
 });
 
-// lint js and minify
+// minify js and css
 
 // live reload changes to browser
-
-// autoprefix css rules
 
 // minify images
 
