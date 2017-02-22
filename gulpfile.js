@@ -4,7 +4,7 @@
 const gulp = require('gulp'),
       less = require('gulp-less'),
       rename = require("gulp-rename"),
-      jslint = require('gulp-jslint'),
+      eslint = require('gulp-eslint'),
       uglify = require('gulp-uglify'),
       cmq = require('gulp-combine-mq'),
       csslint = require('gulp-csslint'),
@@ -67,12 +67,10 @@ gulp.task('cmq', ['compile-less'], () => {
 
 gulp.task('lint-js', () => {
   return gulp.src(cfg.root + cfg.src.js + '/main.js')
-    .pipe(jslint({
-      "devel": true,
-       "browser": true
-    }))
-    .pipe(
-      jslint.reporter('stylish'));
+    .pipe(eslint('config.json'))
+    .pipe(eslint.format())
+    // if you want lint to exit with error use this
+    .pipe(eslint.failAfterError());
 });
 
 gulp.task('watch', ['create-server'], () => {
