@@ -37,7 +37,7 @@ gulp.task('lint-less', () => {
   return gulp.src([
       cfg.root + cfg.src.css + cfg.src.less + '/*.less',
       '!' + cfg.root + cfg.src.css + cfg.src.less + '/normalize.less'])
-    .pipe(lesshint())
+    .pipe(lesshint('.lesshintrc'))
     .pipe(lesshint.reporter())
     .pipe(lesshint.failOnError());
 });
