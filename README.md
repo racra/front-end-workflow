@@ -5,51 +5,6 @@
 
 > Easy to extend front end workflow created with [gulp] (http://gulpjs.com/)
 
-## File tree
-
-```
-src
- |
- | - index.html
- | - css
-      |
-      | - main.css (compiled less)
-      | - less
-           |
-           | - imports.less (import less files here)
-           | - *.less (website styles)
- |     
- | - js
-     |
-     | - main.js
-     | - libs
-          |
-          | - jquery.min.css 
- |
- | - imgs
-     |
-     | - *.jpg | png | gif | svg
-
-dist
- |
- | - index.html
- | - css
-      |
-      | - main.css (minified css)
- |     
- | - js
-     |
-     | - main.js (minified js)
-     | - libs
-          |
-          | - jquery.min.css 
- |
- | - imgs
-     |
-     | - *.jpg | png | gif | svg (minified images)
-
-```
-
 ## Installation
 
 ```
