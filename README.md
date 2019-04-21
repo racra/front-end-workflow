@@ -1,7 +1,4 @@
 # Front end workflow
-![Build Status](https://img.shields.io/travis/rust-lang/rust.svg?style=flat-square)
-![Npm version] (https://img.shields.io/npm/v/npm.svg?style=flat-square)
-![MIT License] (https://img.shields.io/npm/l/express.svg?style=flat-square)
 
 > Easy to extend front end workflow created with [gulp] (http://gulpjs.com/)
 
