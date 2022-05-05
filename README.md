@@ -1,6 +1,6 @@
 # Front end workflow
 
-> Easy to extend front end workflow created with [gulp] (http://gulpjs.com/)
+> Easy to extend front end workflow created with [gulp](http://gulpjs.com/)
 
 ## Installation
 
