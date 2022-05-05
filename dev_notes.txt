@@ -1,9 +1,0 @@
-restructure folders
-
-add es6 support
-
-add pug support with patternlab integration
-
-add sass support
-
-update eslint options
